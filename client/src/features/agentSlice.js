@@ -38,14 +38,26 @@ const agentSlice = createSlice({
 export default agentSlice.reducer;
 
 // FIRST define thunk
+
 export const generateItinerary = createAsyncThunk(
   "GENERATE/ITINERARY",
   async (formData, thunkAPI) => {
     try {
-      const response = await axios.post('/api/plan', formData);
-      return response.data; // 
+      const response = await axios.post(
+        'https://trip-planner-backend-nnqy.onrender.com/api/plan',
+        formData,
+        {
+          withCredentials: true, // ✅ Important for cross-origin request with CORS
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data?.message || "Something went wrong");
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "Something went wrong"
+      );
     }
   }
 );

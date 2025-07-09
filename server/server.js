@@ -5,10 +5,22 @@ const app = express()
 const cors = require("cors")
 const PORT = process.env.PORT || 4000;
 
+const allowedOrigins = [
+  "http://localhost:5173"
+];
+
 app.use(cors({
-    credentials : true,
-    origin : "http://localhost:5173"
-}))
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.warn("Blocked by CORS: ", origin);
+      callback(null, false); //  Don't throw error
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"]
+}));
 
 app.use(express.json())
 app.use(express.urlencoded({extended  : true}))
