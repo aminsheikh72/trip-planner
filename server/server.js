@@ -26,7 +26,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // ✅ Allow preflight for all routes
-app.options("*", cors(corsOptions));
+app.options(/^.*$/, cors(corsOptions)); // ✅ Regex fix
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
