@@ -6,7 +6,7 @@ const cors = require("cors")
 const PORT = process.env.PORT || 4000;
 
 const allowedOrigins = [
-  "http://localhost:5173"
+  "https://trip-planner-topaz-sigma.vercel.app"
 ];
 
 app.use(cors({
